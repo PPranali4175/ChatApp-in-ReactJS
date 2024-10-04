@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:8888');
+const socket = io('http://localhost:8000');
 
 export const ListToChatPage = () => {
     // Sidebar logic to fetch users
@@ -16,8 +16,7 @@ export const ListToChatPage = () => {
     const [talkInGroup, setTalkInGroup] = useState(false);
     const fetchUser = () => {
         socket.emit('loadUser'); // Emit event to load users from server
-        socket.emit('loadChatRooms', { members: Id ? Id : localStorage.getItem('id') }); // Fetch chat rooms
-
+        socket.emit('loadGroupChat', { members: Id ? Id : localStorage.getItem('id') }); // Fetch chat rooms
     };
 
     useEffect(() => {
@@ -29,14 +28,17 @@ export const ListToChatPage = () => {
             const filteredUsers = loadedUsers.filter(user => user._id !== localStorage.getItem('id'));
             setUsers(filteredUsers);
         });
-
-        socket.on('loadChatRooms', (chatRooms) => {
+        console.log("out")
+        socket.on('loadGroupChat', (chatRooms) => {
             // Handle chat rooms here if necessary
+            console.log("chatRooms")
+            console.log(chatRooms)
             setRooms(chatRooms);
         });
 
         return () => {
             socket.off('loadUser'); // Cleanup socket listeners
+            socket.off('loadGroupChat'); // Cleanup socket listeners
         };
     }, []);
 
@@ -79,7 +81,7 @@ export const ListToChatPage = () => {
 
         socket.on('loadMessages', (loadedMessages) => {
             // need to do filter inside socket
-            const filterMessage = loadedMessages.filter()
+            // const filterMessage = loadedMessages.filter()
             setMessages(loadedMessages);
         });
 

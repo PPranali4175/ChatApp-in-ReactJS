@@ -40,7 +40,7 @@ export default function LoginPage() {
         
         toast.success("Login Successfully");
 
-        window.location.href = `/chat`;
+        window.location.href = `/list`;
 
       }
       else {

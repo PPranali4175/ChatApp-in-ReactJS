@@ -7,7 +7,7 @@ const http = require("http");
 
 const app = express();
 const Router = require("./router/routes.js");
-const { loadMessages, sendMessage, fetchChatRoom, createChatRoom } = require("./controllers/ChatController.js"); 
+const { loadMessages, sendMessage, fetchGroupChat, createGroupChat, AddNewMemberInGroupChat } = require("./controllers/ChatController.js"); 
 const { createUser, getAllUser } = require("./controllers/Auth.js");
 
 dotenv.config();
@@ -44,9 +44,9 @@ io.on("connection", (socket) => {
   });
 
   // fetch chat rooms
-  socket.on("loadChatRooms", (data) => {
+  socket.on("loadGroupChat", (data) => {
     
-    fetchChatRoom(data, socket); 
+    fetchGroupChat(data, socket); 
   });
 
   // Handle Users fething
@@ -60,8 +60,12 @@ io.on("connection", (socket) => {
   });
 
   // Handle group chats 
-  socket.on("createChatRoom", (messageData) => {
-    createChatRoom(messageData, io); 
+  socket.on("createGroupChat", (groupDetails) => {
+    createGroupChat(groupDetails, io); 
+  });
+
+  socket.on("newMember", (groupAndMemberDetails) => {
+    AddNewMemberInGroupChat(groupAndMemberDetails, io); 
   });
 
 

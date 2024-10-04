@@ -78,7 +78,7 @@ const sendMessage = async (messageData, io) => {
   }
 };
 
-const createChatRoom = async (roomDetails,io) =>{
+const createGroupChat = async (roomDetails,io) =>{
   try {
     const newRoom = await ChatRoom.create({
       roomName:roomDetails.roomName,
@@ -89,8 +89,20 @@ const createChatRoom = async (roomDetails,io) =>{
     console.error("Error Creating Room" ,error);
   }
 };
+const AddNewMemberInGroupChat = async (groupAndMemberDetails,io) =>{
+  try {
+    const newRoom = await ChatRoom.findByIdAndUpdate(groupAndMemberDetails.groupId,{
+      $push:{
+        members:groupAndMemberDetails.members
+      }
+    })
+    io.emit("newMember",newRoom);
+  } catch (error) {
+    console.error("Error Creating Room" ,error);
+  }
+};
 
-const fetchChatRoom = async(userId,socket) =>{
+const fetchGroupChat = async(userId,socket) =>{
   try {
     
     const chatRooms = await ChatRoom.find({
@@ -99,11 +111,10 @@ const fetchChatRoom = async(userId,socket) =>{
       path:'members',
       select:'name'
     })
-    
     socket.emit('loadChatRooms',chatRooms)
   } catch (error) {
     console.error("Error loading chat rooms:", error);
   }
 }
 
-module.exports = { sendMessage, loadMessages, createChatRoom,fetchChatRoom }
+module.exports = { sendMessage, loadMessages, createGroupChat, AddNewMemberInGroupChat, fetchGroupChat }
