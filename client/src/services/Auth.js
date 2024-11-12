@@ -9,7 +9,7 @@ const getHeader = () =>{
 
 // Create an Axios instance with default settings
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000', 
+  baseURL: 'https://chatapp-in-reactjs-server.onrender.com', 
   timeout: 5000, 
   headers: getHeader()
 });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:8000');
+const socket = io('https://chatapp-in-reactjs-server.onrender.com');
 
 export const ListToChatPage = () => {
     // Sidebar logic to fetch users
