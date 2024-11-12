@@ -10,6 +10,11 @@ router.post('/login',loginUser);
 router.post('/generatetoken/:id',auth,generateToken);
 router.post('/resetpassword/:token',resetPassword);
 
+
+router.get('/',(req,res)=>{
+    res.send('Welcome')
+})
+
 // CRUD
 router.post('/user',createUser);
 router.get('/user/:id',auth,getUser);

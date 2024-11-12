@@ -15,7 +15,7 @@ export const ListToChatPage = () => {
     const [loading, setLoading] = useState(false); // Loading state for file upload
     const [talkInGroup, setTalkInGroup] = useState(false);
     const fetchUser = () => {
-        socket.emit('loadUser'); // Emit event to load users from server
+        socket.emit('loadUser'); 
         socket.emit('loadGroupChat', { members: Id ? Id : localStorage.getItem('id') }); // Fetch chat rooms
     };
 

@@ -39,13 +39,12 @@ io.on("connection", (socket) => {
   
   // Handle loading messages
   socket.on("loadMessages", (data) => {
-    
     loadMessages(data, socket); 
   });
 
   // fetch chat rooms
   socket.on("loadGroupChat", (data) => {
-    
+    console.log(data)
     fetchGroupChat(data, socket); 
   });
 

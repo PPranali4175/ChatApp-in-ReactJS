@@ -21,13 +21,13 @@ const loadMessages = async ({ sender, receiver }, socket) => {
       .populate("receiver")
       .populate("room")
       .exec();
+      
     // Emit messages back to the client
     socket.emit("loadMessages", messages);
   } catch (err) {
     console.error("Error loading messages:", err);
   }
 };
-
 const sendMessage = async (messageData, io) => {
   try {
     let fileUrl = "";
@@ -77,7 +77,6 @@ const sendMessage = async (messageData, io) => {
     console.error("Error saving message:", err);
   }
 };
-
 const createGroupChat = async (roomDetails,io) =>{
   try {
     const newRoom = await ChatRoom.create({
@@ -101,7 +100,6 @@ const AddNewMemberInGroupChat = async (groupAndMemberDetails,io) =>{
     console.error("Error Creating Room" ,error);
   }
 };
-
 const fetchGroupChat = async(userId,socket) =>{
   try {
     
@@ -111,7 +109,7 @@ const fetchGroupChat = async(userId,socket) =>{
       path:'members',
       select:'name'
     })
-    socket.emit('loadChatRooms',chatRooms)
+    socket.emit('loadGroupChat',chatRooms)
   } catch (error) {
     console.error("Error loading chat rooms:", error);
   }
